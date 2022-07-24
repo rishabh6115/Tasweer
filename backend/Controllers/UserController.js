@@ -4,7 +4,6 @@ const generateToken = require("../generateToken");
 
 const register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-
   if (!name || !email || !password) {
     throw new Error("Please Enter All the feilds");
   }
@@ -25,7 +24,9 @@ const register = asyncHandler(async (req, res) => {
     });
 
     res.status(201).json({
-      message: "Success",
+      _id: user._id,
+      name: user.name,
+      email: user.email,
     });
   } else {
     res.status("400");
@@ -53,7 +54,7 @@ const login = asyncHandler(async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res.status(201).json({ message: "Logged in" });
+    res.status(201).json({ _id: user._id, name: user.name, email: user.email });
   } else {
     throw new Error("Invalid Credentials");
   }
@@ -81,6 +82,10 @@ const alluser = asyncHandler(async (req, res) => {
   res.json(users);
 });
 
+const alluser2 = asyncHandler(async (req, res) => {
+  const users = await User.find({}).select("-password");
+  res.json(users);
+});
 const logout = asyncHandler(async (req, res) => {
   if (req.user) {
     res.clearCookie("jwt");
@@ -88,4 +93,4 @@ const logout = asyncHandler(async (req, res) => {
   } else throw new Error("Something went wrong");
 });
 
-module.exports = { register, login, getuser, alluser, logout };
+module.exports = { register, login, getuser, alluser, logout, alluser2 };

@@ -5,20 +5,16 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./db");
 const userRoutes = require("./Routes/userRoutes");
+const postRoutes = require("./Routes/postRoutes");
 
 connectDB();
 dotenv.config();
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:3000",
-  })
-);
 
 app.use("/api/user", userRoutes);
+app.use("/api/post", postRoutes);
 
 app.get("/", (req, res) => {
   res.send("api running");
