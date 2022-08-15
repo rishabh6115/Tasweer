@@ -5,11 +5,12 @@ const initialState = {
   email: "",
   password: "",
   allusers: [],
-  loggedUser: {},
+  loggedUser: null,
   isAuthenticated: false,
   loading: false,
   error: false,
   notification: "",
+  apploading: false,
 };
 
 const userSlice = createSlice({
@@ -47,6 +48,9 @@ const userSlice = createSlice({
     },
     setNotification(state, action) {
       state.notification = action.payload;
+    },
+    setAppLoading(state, action) {
+      state.apploading = action.payload;
     },
   },
 });

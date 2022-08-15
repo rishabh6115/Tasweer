@@ -14,7 +14,7 @@ const {
 } = require("../Controllers/postController");
 
 router.route("/").post(auth, createPost).get(allPost);
-router.route("/singleuserpost").get(auth, singleUserPosts);
+router.route("/singleuserpost/:userId").get(auth, singleUserPosts);
 router.route("/setlike").put(auth, setLikes);
 router.route("/addcomment").put(auth, addComments);
 router.route("/deletecomment").put(auth, deleteComment);

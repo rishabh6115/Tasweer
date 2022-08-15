@@ -59,7 +59,7 @@ const Login = () => {
     dispatch(userActions.setError(false));
   }
   useEffect(() => {
-    if (loggeduser.name) {
+    if (loggeduser !== null) {
       dispatch(userActions.setIsAuthenticated(true));
       navigate("/");
     }
@@ -67,7 +67,7 @@ const Login = () => {
 
   return (
     <>
-      <Box minH="100vh" alignItems="center" display="flex">
+      <Box minH="60vh" alignItems="center" display="flex">
         <Box
           width={{ lg: "25vw", base: "60vw" }}
           display="flex"

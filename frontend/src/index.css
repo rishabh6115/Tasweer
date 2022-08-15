@@ -16,8 +16,8 @@
   ) !important;
 } */
 
-button:hover {
+/* button:hover {
   transition: all 0.3s;
-  transform: scale(1.05);
-  /* animation: bump 1s infinite; */
-}
+  /* transform: scale(1.05); */
+/* animation: bump 1s infinite; */
+/* } */

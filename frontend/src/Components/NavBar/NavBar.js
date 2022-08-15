@@ -1,17 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Avatar,
+  Box,
+  Button,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+  Text,
+} from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../store/userSlice";
 
 const NavBar = () => {
   const isAuth = useSelector((state) => state.user.isAuthenticated);
   const dispatch = useDispatch();
+  const nav = useNavigate();
   const clickHandler = () => {
     dispatch(userActions.logout());
-    dispatch(userActions.setLoggedUser({}));
-    dispatch(userActions.setIsAuthenticated(false));
+    nav("/logout");
   };
+
+  const loggedUser = useSelector((state) => state);
+  console.log(loggedUser);
 
   return (
     <>
@@ -24,6 +37,7 @@ const NavBar = () => {
         padding="30px"
         justifyContent="space-between"
         borderBottomRadius="10px"
+        marginBottom="2rem"
       >
         <Link to="/">
           <Box textColor="purple.900" fontSize="4xl" fontWeight="extrabold">
@@ -32,16 +46,49 @@ const NavBar = () => {
         </Link>
         <Box>
           {isAuth ? (
-            <Button
-              colorScheme="purple"
-              variant="solid"
-              rounded="xl"
-              onClick={clickHandler}
-            >
-              <Link to="/logout">
-                <Text>Logout</Text>
-              </Link>
-            </Button>
+            <>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  minW={0}
+                >
+                  <Avatar
+                    size={"sm"}
+                    bg="purple.300"
+                    name={loggedUser.user.loggedUser.name}
+                  />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem
+                    onClick={() => {
+                      nav("/create-new-post");
+                    }}
+                  >
+                    Create New Post
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      nav("my-posts");
+                    }}
+                  >
+                    My Posts
+                  </MenuItem>
+                  <MenuDivider />
+                  <MenuItem display="flex" justifyContent="center">
+                    <Button
+                      colorScheme="purple"
+                      variant="solid"
+                      onClick={clickHandler}
+                    >
+                      <Text>Logout</Text>
+                    </Button>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </>
           ) : (
             <Box display="flex">
               <Link to="/register">

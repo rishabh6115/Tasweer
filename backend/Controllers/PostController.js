@@ -82,18 +82,20 @@ const allPost = asyncHandler(async (req, res) => {
 });
 
 const singleUserPosts = asyncHandler(async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.params;
 
   if (!userId) {
     throw new Error("Id is required");
   }
-
+  console.log(req.user._id);
+  console.log(userId);
   let singleUserPosts = await Post.find({
     author: { $eq: userId },
   })
     .populate("author", "-password")
     .populate("likes", "-password")
     .populate("comments");
+  console.log(singleUserPosts);
 
   singleUserPosts = await User.populate(singleUserPosts, {
     path: "comments.author",
