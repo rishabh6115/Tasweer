@@ -2,21 +2,23 @@ import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import Card from "../Card";
-import { useNavigate } from "react-router-dom";
+import Card from "../UI/Card";
+import { useNavigate, useParams } from "react-router-dom";
 
 const MyPosts = () => {
   const User = useSelector((state) => state.user.loggedUser);
   const nav = useNavigate();
   const isAuth = useSelector((state) => state.user.isAuthenticated);
-  console.log(User?._id);
+  // console.log(User?._id);
+  const { id } = useParams();
+  const { name } = useParams();
   const [singleUserPosts, setSingleUserPosts] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const singleUserPost = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/post/singleuserpost/${User._id}`);
+      const { data } = await axios.get(`/api/post/singleuserpost/${id}`);
       setSingleUserPosts(data);
       setLoading(false);
     } catch (error) {
@@ -36,9 +38,11 @@ const MyPosts = () => {
   return (
     <div>
       <Flex width="90%" mx="auto" flexDirection="column">
-        <Flex justifyContent="center" flex="1">
-          <Text fontSize="4xl">My Posts</Text>
-        </Flex>
+        {!loading && singleUserPosts?.length > 0 && (
+          <Flex justifyContent="center" flex="1">
+            <Text fontSize="4xl">{name} Posts</Text>
+          </Flex>
+        )}
         {loading ? (
           <Box
             display="flex"
@@ -54,7 +58,7 @@ const MyPosts = () => {
               size="xl"
             />
           </Box>
-        ) : (
+        ) : singleUserPosts?.length > 0 ? (
           <Box
             gap="2rem"
             gridTemplateColumns={{
@@ -78,6 +82,17 @@ const MyPosts = () => {
                 id={item._id}
               />
             ))}
+          </Box>
+        ) : (
+          <Box
+            minHeight="50vh"
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+            fontSize="8xl"
+            fontWeight="600"
+          >
+            No Post Found
           </Box>
         )}
       </Flex>

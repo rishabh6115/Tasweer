@@ -38,6 +38,8 @@ const NavBar = () => {
         justifyContent="space-between"
         borderBottomRadius="10px"
         marginBottom="2rem"
+        position="sticky"
+        top="0"
       >
         <Link to="/">
           <Box textColor="purple.900" fontSize="4xl" fontWeight="extrabold">
@@ -71,7 +73,7 @@ const NavBar = () => {
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      nav("my-posts");
+                      nav(`posts/My/${loggedUser.user.loggedUser._id}`);
                     }}
                   >
                     My Posts

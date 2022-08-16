@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 import { useSelector } from "react-redux";
-import Card from "../Card";
+import Card from "../UI/Card";
 
 const HomePage = () => {
   const postData = useSelector((state) => state.post.allPosts);

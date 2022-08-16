@@ -22,7 +22,6 @@ const CreateNewPost = () => {
       alert(JSON.stringify(values, null, 2));
     },
   });
-
   return (
     <>
       <Box display="flex">

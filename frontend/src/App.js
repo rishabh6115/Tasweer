@@ -9,8 +9,8 @@ import { useEffect } from "react";
 import { userActions } from "./Components/store/userSlice";
 import Logout from "./Components/Logout/Logout";
 import { Box, Spinner } from "@chakra-ui/react";
-import CreateNewPost from "./Components/CreateNewPost";
 import MyPosts from "./Components/MyPosts";
+import CreateNewPost from "./Components/CreateNewPost";
 
 function App() {
   const appLoading = useSelector((state) => state.user.apploading);
@@ -48,7 +48,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/logout" element={<Logout />} />
-            <Route path="/my-posts" element={<MyPosts />} />
+            <Route path="/posts/:name/:id" element={<MyPosts />} />
             <Route path="/create-new-post" element={<CreateNewPost />} />
           </>
         )}
