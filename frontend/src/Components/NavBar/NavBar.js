@@ -58,8 +58,7 @@ const NavBar = () => {
                   minW={0}
                 >
                   <Avatar
-                    size={"sm"}
-                    bg="purple.300"
+                    bg="purple.600"
                     name={loggedUser.user.loggedUser.name}
                   />
                 </MenuButton>

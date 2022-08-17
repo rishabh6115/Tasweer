@@ -1,8 +1,9 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Avatar, Box, Flex } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const UserList = (props) => {
+  console.log(props);
   const nav = useNavigate();
   return (
     <>
@@ -16,11 +17,19 @@ const UserList = (props) => {
         }}
         cursor="pointer"
       >
+        <Box display="flex" alignItems="center" mr="5px">
+          <Avatar name={props.name} size="sm" bg="purple.700" />
+        </Box>
         <Box>
           <Box fontWeight="700">{props.name}</Box>
           <Box color="rgb(0 0 0 /60%)" fontSize="0.8rem" mt="-4px">
             {props.email}
           </Box>
+          {props.show === "comments" && (
+            <Box>
+              <Box>{props.content}</Box>
+            </Box>
+          )}
         </Box>
       </Flex>
     </>

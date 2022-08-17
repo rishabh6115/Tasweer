@@ -39,7 +39,6 @@ export function* handleLoggedUser() {
     }
     const datatwo = yield response.json();
     yield put(userActions.setIsAuthenticated(true));
-
     yield put(userActions.setLoggedUser(datatwo));
     yield put(userActions.setAppLoading(false));
   } catch (error) {

@@ -60,14 +60,17 @@ const MyPosts = () => {
           </Box>
         ) : singleUserPosts?.length > 0 ? (
           <Box
+            width={{ sm: "40vw", lg: "60vw", base: "90vw" }}
+            margin="auto"
             gap="2rem"
             gridTemplateColumns={{
               base: "repeat(1,1fr)",
-              sm: "repeat(2,1fr)",
-              lg: "repeat(4,1fr)",
-              md: "repeat(3,1fr)",
+              sm: "repeat(1,1fr)",
+              lg: "repeat(2,1fr)",
+              // md: "repeat(3,1fr)",
             }}
             display="grid"
+            justifyContent="center"
           >
             {singleUserPosts?.map((item) => (
               <Card
@@ -80,6 +83,7 @@ const MyPosts = () => {
                 likes={item.likes}
                 createdAt={item.createdAt}
                 id={item._id}
+                mypost={true}
               />
             ))}
           </Box>

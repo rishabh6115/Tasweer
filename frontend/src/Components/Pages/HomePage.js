@@ -5,25 +5,26 @@ import Card from "../UI/Card";
 
 const HomePage = () => {
   const postData = useSelector((state) => state.post.allPosts);
-  console.log(postData);
 
   return (
     <>
-      <Box minHeight="92vh">
+      <Box>
         <Text textAlign="center" fontSize="3xl" fontWeight="500" mb="2rem">
-          All Blogs
+          All Posts
         </Text>
         <Box
-          width="90vw"
+          width={{ sm: "40vw", lg: "60vw", base: "90vw" }}
           margin="auto"
           gap="2rem"
           gridTemplateColumns={{
             base: "repeat(1,1fr)",
-            sm: "repeat(2,1fr)",
-            lg: "repeat(4,1fr)",
-            md: "repeat(3,1fr)",
+            sm: "repeat(1,1fr)",
+            lg: "repeat(2,1fr)",
+            // md: "repeat(3,1fr)",
           }}
           display="grid"
+          justifyContent="center"
+          // flexWrap="wrap"
         >
           {postData?.map((item) => (
             <Card
@@ -36,6 +37,7 @@ const HomePage = () => {
               likes={item.likes}
               createdAt={item.createdAt}
               id={item._id}
+              mypost={false}
             />
           ))}
         </Box>

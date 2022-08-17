@@ -5,18 +5,13 @@ import "./logout.css";
 
 const Logout = () => {
   return (
-    <Box
-      minH="100vh"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-    >
+    <Box minH="60vh" display="flex" justifyContent="center" alignItems="center">
       <Box display="flex" flexDirection="column">
         <Text fontSize="4xl" textAlign="center">
           You Have Been Successfully Logged Out
         </Text>
         <Box display="flex" justifyContent="center">
-          <Link to="/login" className="logout_login">
+          <Link to="/" className="logout_login">
             <Button
               colorScheme="purple"
               maxW="fit-content"
@@ -25,7 +20,7 @@ const Logout = () => {
               mr="20px"
               flexBasis="50%"
             >
-              Login Again
+              HomePage
             </Button>
           </Link>
         </Box>
