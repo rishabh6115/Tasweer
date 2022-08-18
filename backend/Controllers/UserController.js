@@ -82,10 +82,6 @@ const alluser = asyncHandler(async (req, res) => {
   res.json(users);
 });
 
-const alluser2 = asyncHandler(async (req, res) => {
-  const users = await User.find({}).select("-password");
-  res.json(users);
-});
 const logout = asyncHandler(async (req, res) => {
   if (req.user) {
     res.clearCookie("jwt");
@@ -93,4 +89,4 @@ const logout = asyncHandler(async (req, res) => {
   } else throw new Error("Something went wrong");
 });
 
-module.exports = { register, login, getuser, alluser, logout, alluser2 };
+module.exports = { register, login, getuser, alluser, logout };

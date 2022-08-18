@@ -185,6 +185,23 @@ const deleteComment = asyncHandler(async (req, res) => {
   res.status(201).json({ message: "Comment Deleted Successfully" });
 });
 
+const singlePost = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    throw new Error("Post Id is requried");
+  }
+  const post = await Post.findById(id)
+    .populate("likes")
+    .populate("comments")
+    .populate("author");
+  if (!post) {
+    res.status(400);
+    throw new Error("Post not found");
+  }
+  res.status(201).json(post);
+});
+
 module.exports = {
   createPost,
   updatePost,
@@ -194,4 +211,5 @@ module.exports = {
   setLikes,
   addComments,
   deleteComment,
+  singlePost,
 };
