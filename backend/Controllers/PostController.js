@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
-const Post = require("../modals/PostModal");
+const Post = require("../modals/postModal");
 const Comment = require("../modals/commentModal");
-const User = require("../modals/UserModal");
+const User = require("../modals/userModal");
 
 const createPost = asyncHandler(async (req, res) => {
   const { heading, content, pic } = req.body;

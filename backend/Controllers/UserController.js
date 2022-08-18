@@ -1,4 +1,4 @@
-const User = require("../modals/UserModal");
+const User = require("../modals/userModal");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../generateToken");
 
