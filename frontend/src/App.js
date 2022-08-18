@@ -11,6 +11,7 @@ import Logout from "./Components/Logout/Logout";
 import { Box, Spinner } from "@chakra-ui/react";
 import MyPosts from "./Components/MyPosts";
 import CreateNewPost from "./Components/CreateNewPost";
+import SinglePost from "./Components/SinglePost/SinglePost";
 
 function App() {
   const appLoading = useSelector((state) => state.user.apploading);
@@ -50,6 +51,7 @@ function App() {
             <Route path="/logout" element={<Logout />} />
             <Route path="/posts/:name/:id" element={<MyPosts />} />
             <Route path="/create-new-post" element={<CreateNewPost />} />
+            <Route path="/single-post/:id" element={<SinglePost />} />
           </>
         )}
       </Routes>

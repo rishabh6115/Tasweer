@@ -1,21 +1,33 @@
 import { Avatar, Box, Flex } from "@chakra-ui/react";
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const UserList = (props) => {
+  const isAuth = useSelector((state) => state.user.isAuthenticated);
+
   console.log(props);
   const nav = useNavigate();
+  const clickHandler = () => {
+    if (!props.show || !isAuth) {
+      return;
+    }
+    nav(`/posts/${props.name}/${props.id}`);
+    props.clicked();
+  };
   return (
     <>
       <Flex
         my="1.5"
         p="2"
+        _hover={{
+          background: "purple.300",
+          // color: "white",
+        }}
         bg="purple.200"
         borderRadius="10px"
-        onClick={() => {
-          nav(`posts/${props.name}/${props.id}`);
-        }}
-        cursor="pointer"
+        onClick={clickHandler}
+        cursor={props.show && isAuth ? "pointer" : "auto"}
       >
         <Box display="flex" alignItems="center" mr="5px">
           <Avatar name={props.name} size="sm" bg="purple.700" />

@@ -25,9 +25,7 @@ const CreateNewPost = () => {
         .max(15, "Must be 15 characters or less")
         .required("Heading is required")
         .min(3, "Must be more then 3 characters"),
-      content: Yup.string()
-        .min(20, "Must be more then 20 characters")
-        .required("Content is required"),
+      content: Yup.string().required("Content is required"),
     }),
     onSubmit: async (values) => {
       try {
@@ -102,6 +100,7 @@ const CreateNewPost = () => {
           paddingTop="1vw"
           rounded="lg"
           position="relative"
+          mt={{ base: "150px", lg: "1" }}
         >
           <form onSubmit={formik.handleSubmit} style={{}}>
             <Text fontSize="2xl" fontWeight="bold" color="black">
@@ -109,7 +108,7 @@ const CreateNewPost = () => {
             </Text>
             <Input
               marginTop="10px"
-              placeholder="Heading"
+              placeholder="Title"
               type="text"
               id="heading"
               name="heading"
@@ -129,7 +128,7 @@ const CreateNewPost = () => {
             ) : null}
             <Textarea
               marginTop="10px"
-              placeholder="Content"
+              placeholder="Caption"
               type="text"
               id="content"
               name="content"
@@ -165,6 +164,7 @@ const CreateNewPost = () => {
               colorScheme="purple"
               mt="10px"
               type="submit"
+              width="100%"
               isLoading={loading}
             >
               Submit

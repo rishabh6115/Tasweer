@@ -3,9 +3,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 const CommentList = (props) => {
+  console.log(props);
   const isAuth = useSelector((state) => state.user.isAuthenticated);
   const userData = useSelector((state) => state.user.loggedUser);
   const userId = isAuth ? userData._id : "";
@@ -18,6 +18,10 @@ const CommentList = (props) => {
       <Flex
         my="1.5"
         p="2"
+        _hover={{
+          background: "purple.300",
+          // color: "white",
+        }}
         bg="purple.200"
         borderRadius="10px"
         position="relative"
@@ -27,9 +31,12 @@ const CommentList = (props) => {
           alignItems="center"
           mr="5px"
           onClick={() => {
-            nav(`posts/${props.name}/${props.id}`);
+            if (!props.show || !isAuth) {
+              return;
+            }
+            nav(`/posts/${props.name}/${props.id}`);
           }}
-          cursor="pointer"
+          cursor={props.show && isAuth ? "pointer" : "auto"}
         >
           <Avatar name={props.name} size="sm" bg="purple.700" />
         </Box>

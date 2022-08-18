@@ -27,11 +27,8 @@ import CommentList from "../UserList/CommentList";
 import { getPosts, setPostRequestLoading } from "../../store/postSlice";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import ReactCardFlip from "react-card-flip";
-import { TiArrowBack } from "react-icons/ti";
-import { AiFillDelete } from "react-icons/ai";
 
-const Card = (props) => {
+const CardTwo = (props) => {
   console.log(props);
   const dispatch = useDispatch();
   const toast = useToast();
@@ -50,7 +47,9 @@ const Card = (props) => {
   const [comment, setComment] = useState("");
   const btnRef = React.useRef(null);
   const nav = useNavigate();
-  const isAuthor = userId === props.author._id;
+  const isAuthor = props.author._id === userData._id;
+  console.log(isAuthor);
+
   useEffect(() => {
     setActive(() => {
       return updatedLikes.some((item) => item._id === userId);
@@ -121,18 +120,6 @@ const Card = (props) => {
     }
   };
 
-  const deletePost = async () => {
-    try {
-      dispatch(setPostRequestLoading(true));
-      const { data } = await axios.delete(`/api/post/${id}`);
-      dispatch(getPosts());
-      console.log(data);
-    } catch (error) {
-      dispatch(setPostRequestLoading(false));
-      console.log(error);
-    }
-  };
-
   const OverlayOne = () => (
     <ModalOverlay
       bg="blackAlpha.300"
@@ -141,167 +128,88 @@ const Card = (props) => {
   );
 
   const [overlay, setOverlay] = React.useState(<OverlayOne />);
-  const [click, setClick] = useState(false);
 
   return (
     <>
-      <ReactCardFlip
-        className="flip-card"
-        isFlipped={click}
-        flipDirection="horizontal"
-      >
+      <Box display="flex" flexDirection="column" shadow="lg" rounded="lg">
+        <Image
+          src={props.pic}
+          alt={props.heading}
+          rounded="2xl"
+          borderBottomRadius="0"
+          maxHeight="60vh"
+          // maxWidth="50vw"
+        ></Image>
         <Box
+          padding="0 1rem"
           display="flex"
           flexDirection="column"
-          shadow="lg"
-          rounded="lg"
-          height="fit-content"
-          position="relative"
+          gap="0.5rem"
         >
-          {isAuthor && (
-            <Box
-              position="absolute"
-              bottom="25px"
-              left="25px"
-              onClick={() => {
-                setClick(!click);
-              }}
-              fontSize="1.5rem"
-              cursor="pointer"
-            >
-              <AiFillDelete style={{ fill: "#ef233c" }} />
-            </Box>
-          )}
-          <Image
-            src={props.pic}
-            alt={props.heading}
-            rounded="2xl"
-            borderBottomRadius="0"
-            cursor={isAuth ? "pointer" : " auto"}
-            onClick={() => {
-              if (!isAuth) return;
-              nav(`/single-post/${id}`);
-            }}
-            height="350px"
-          ></Image>
+          <Text fontSize="xl" mt="0.5rem" fontWeight="500">
+            {props.heading}
+          </Text>
+          <Text>{props.content}</Text>
           <Box
-            padding="0 1rem"
-            display="flex"
-            flexDirection="column"
-            gap="0.5rem"
             justifyContent="space-between"
+            display="flex"
+            alignItems="center"
           >
-            <Text fontSize="xl" mt="0.5rem" fontWeight="500">
-              {props.heading}
-            </Text>
-            <Text>
-              {props.content.length > 58
-                ? props.content?.slice(0, 58)
-                : props.content}
-              <Text
-                display="inline"
-                cursor="pointer"
-                onClick={() => {
-                  if (!isAuth) return;
-                  nav(`/single-post/${id}`);
-                }}
-              >
-                {props.content.length > 58 && "..."}
+            <Box>
+              {isAuth && (
+                <Heart
+                  isActive={active}
+                  onClick={clickHandler}
+                  style={{ width: "33px", margin: "auto" }}
+                />
+              )}
+              <Text fontWeight="500" display="inline-block" mr="5px">
+                {updatedLikes.length}
               </Text>
-            </Text>
-            <Box
-              justifyContent="space-between"
-              display="flex"
-              alignItems="center"
-            >
-              <Box fontSize={!isAuth ? "xl" : ""}>
-                {isAuth && (
-                  <Heart
-                    isActive={active}
-                    onClick={clickHandler}
-                    style={{ width: "33px", margin: "auto" }}
-                  />
-                )}
-                <Text fontWeight="500" display="inline-block" mr="5px">
-                  {updatedLikes.length}
-                </Text>
-                <Text
-                  display="inline-block"
-                  mr="5px"
-                  ref={btnRef}
-                  onClick={() => {
-                    setModalShow("Likes");
-                    setOverlay(<OverlayOne />);
-                    onOpen();
-                  }}
-                  cursor="pointer"
-                >
-                  {updatedLikes.length > 1 ? "Likes" : "Like"}
-                </Text>
-              </Box>
-              <Box fontSize="xl">
-                <Text fontWeight="500" display="inline-block" mr="5px">
-                  {props.comments.length}
-                </Text>
-                <Box
-                  ref={btnRef}
-                  onClick={() => {
-                    setModalShow("Comments");
-                    setOverlay(<OverlayOne />);
-                    onOpen();
-                  }}
-                  cursor="pointer"
-                  display="inline-block"
-                  mr="5px"
-                >
-                  {props.comments.length > 1 ? "Comments" : "Comment"}
-                </Box>
-              </Box>
+              <Text
+                display="inline-block"
+                mr="5px"
+                ref={btnRef}
+                onClick={() => {
+                  setModalShow("Likes");
+                  setOverlay(<OverlayOne />);
+                  onOpen();
+                }}
+                cursor="pointer"
+              >
+                {updatedLikes.length > 1 ? "Likes" : "Like"}
+              </Text>
             </Box>
-            <Box
-              display="flex"
-              alignItems="flex-end"
-              flexDirection="column"
-              mb="1rem"
-            >
-              <Text> {moment(props.createdAt).fromNow()}</Text>
-              <Text fontSize="0.8rem"> - {props.author.name}</Text>
+            <Box fontSize="xl">
+              <Text fontWeight="500" display="inline-block" mr="5px">
+                {props.comments.length}
+              </Text>
+              <Box
+                ref={btnRef}
+                onClick={() => {
+                  setModalShow("Comments");
+                  setOverlay(<OverlayOne />);
+                  onOpen();
+                }}
+                cursor="pointer"
+                display="inline-block"
+                mr="5px"
+              >
+                {props.comments.length > 1 ? "Comments" : "Comment"}
+              </Box>
             </Box>
           </Box>
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          shadow="lg"
-          rounded="lg"
-          height="550px"
-          justifyContent="center"
-          alignItems="center"
-          position="relative"
-        >
           <Box
-            position="absolute"
-            top="2"
-            left="2"
-            fontSize="2.5rem"
-            onClick={() => {
-              setClick(!click);
-            }}
-            cursor="pointer"
+            display="flex"
+            alignItems="flex-end"
+            flexDirection="column"
+            mb="1rem"
           >
-            <TiArrowBack />
-          </Box>
-          <Box display="flex" flexDirection="column" alignItems="center">
-            <Text fontSize="3xl" fontWeight="700" mt="2">
-              <span style={{ color: "red" }}> Confirm</span> to delete
-            </Text>
-            <Button colorScheme="red" onClick={deletePost} isLoading={postReq}>
-              Delete
-            </Button>
+            <Text> {moment(props.createdAt).fromNow()}</Text>
+            <Text fontSize="0.8rem"> - {props.author.name}</Text>
           </Box>
         </Box>
-      </ReactCardFlip>
-
+      </Box>
       <Modal
         onClose={onClose}
         finalFocusRef={btnRef}
@@ -320,7 +228,7 @@ const Card = (props) => {
                   id={item._id}
                   name={item.name}
                   email={item.email}
-                  show={props.show}
+                  show={false}
                 />
               ))}
             {modalShow === "Comments" &&
@@ -333,7 +241,7 @@ const Card = (props) => {
                   deleteComment={deleteComment}
                   commentId={item._id}
                   postReq={postReq}
-                  show={props.show}
+                  show={false}
                 />
               ))}
 
@@ -368,4 +276,4 @@ const Card = (props) => {
   );
 };
 
-export default Card;
+export default CardTwo;

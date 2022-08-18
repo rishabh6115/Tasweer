@@ -1,39 +1,22 @@
 import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import Card from "../UI/Card";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const MyPosts = () => {
-  const User = useSelector((state) => state.user.loggedUser);
-  const nav = useNavigate();
   const isAuth = useSelector((state) => state.user.isAuthenticated);
-  // console.log(User?._id);
+  const post = useSelector((state) => state.post);
   const { id } = useParams();
   const { name } = useParams();
-  const [singleUserPosts, setSingleUserPosts] = useState(null);
-  const [loading, setLoading] = useState(true);
+  console.log(id);
+  // eslint-disable-next-line no-unused-vars
+  const [loading, setLoading] = useState(false);
 
-  const singleUserPost = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(`/api/post/singleuserpost/${id}`);
-      setSingleUserPosts(data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isAuth) {
-      singleUserPost();
-    } else {
-      nav("/");
-    }
-  }, []);
+  const singleUserPosts = isAuth
+    ? post.allPosts.filter((item) => item.author._id === id)
+    : "";
+  console.log(singleUserPosts);
 
   return (
     <div>
@@ -67,10 +50,10 @@ const MyPosts = () => {
               base: "repeat(1,1fr)",
               sm: "repeat(1,1fr)",
               lg: "repeat(2,1fr)",
-              // md: "repeat(3,1fr)",
             }}
             display="grid"
             justifyContent="center"
+            my="4"
           >
             {singleUserPosts?.map((item) => (
               <Card
@@ -83,7 +66,7 @@ const MyPosts = () => {
                 likes={item.likes}
                 createdAt={item.createdAt}
                 id={item._id}
-                mypost={true}
+                show={false}
               />
             ))}
           </Box>
@@ -93,7 +76,7 @@ const MyPosts = () => {
             justifyContent="center"
             alignItems="center"
             display="flex"
-            fontSize="8xl"
+            fontSize={{ base: "4xl", md: "8xl" }}
             fontWeight="600"
           >
             No Post Found

@@ -20,11 +20,10 @@ const HomePage = () => {
             base: "repeat(1,1fr)",
             sm: "repeat(1,1fr)",
             lg: "repeat(2,1fr)",
-            // md: "repeat(3,1fr)",
           }}
           display="grid"
           justifyContent="center"
-          // flexWrap="wrap"
+          my="2rem"
         >
           {postData?.map((item) => (
             <Card
@@ -37,7 +36,7 @@ const HomePage = () => {
               likes={item.likes}
               createdAt={item.createdAt}
               id={item._id}
-              mypost={false}
+              show={true}
             />
           ))}
         </Box>
