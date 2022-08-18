@@ -265,7 +265,7 @@ const Card = (props) => {
               mb="1rem"
             >
               <Text> {moment(props.createdAt).fromNow()}</Text>
-              <Text fontSize="0.8rem"> - {props.author.name}</Text>
+              <Text fontSize="0.8rem"> ~ {props.author.name}</Text>
             </Box>
           </Box>
         </Box>
