@@ -7,5 +7,5 @@ export const allPostRequest = () => {
       accept: "application/json",
     },
   };
-  return axios.get("/api/post/", config);
+  return axios.get(`${process.env.REACT_APP_BACKEND}/api/post/`, config);
 };

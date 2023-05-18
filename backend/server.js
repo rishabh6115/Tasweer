@@ -13,6 +13,7 @@ dotenv.config();
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);

@@ -67,6 +67,7 @@ const Card = (props) => {
     try {
       const config = {
         headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "content-type": `application/json`,
         },
       };
@@ -74,7 +75,11 @@ const Card = (props) => {
         postId: id,
       };
 
-      const { data } = await axios.put("/api/post/setlike", body, config);
+      await axios.put(
+        `${process.env.REACT_APP_BACKEND}/api/post/setlike`,
+        body,
+        config
+      );
       dispatch(getPosts());
     } catch (error) {
       console.log(error);
@@ -97,7 +102,16 @@ const Card = (props) => {
         postId: id,
         content: comment,
       };
-      const { data } = await axios.put("/api/post/addcomment", body);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+      await axios.put(
+        `${process.env.REACT_APP_BACKEND}/api/post/addcomment`,
+        body,
+        config
+      );
       dispatch(getPosts());
     } catch (error) {
       dispatch(setPostRequestLoading(false));
@@ -112,9 +126,17 @@ const Card = (props) => {
         postId: id,
         commentId: CommentId,
       };
-      const { data } = await axios.put("/api/post/deletecomment", body);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+      const { data } = await axios.put(
+        `${process.env.REACT_APP_BACKEND}/api/post/deletecomment`,
+        body,
+        config
+      );
       dispatch(getPosts());
-      console.log(data);
     } catch (error) {
       dispatch(setPostRequestLoading(false));
       console.log(error);
@@ -124,7 +146,15 @@ const Card = (props) => {
   const deletePost = async () => {
     try {
       dispatch(setPostRequestLoading(true));
-      const { data } = await axios.delete(`/api/post/${id}`);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+      const { data } = await axios.delete(
+        `${process.env.REACT_APP_BACKEND}/api/post/${id}`,
+        config
+      );
       dispatch(getPosts());
       console.log(data);
     } catch (error) {

@@ -27,6 +27,7 @@ const register = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      token: token,
     });
   } else {
     res.status("400");
@@ -54,7 +55,14 @@ const login = asyncHandler(async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res.status(201).json({ _id: user._id, name: user.name, email: user.email });
+    res
+      .status(201)
+      .json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        token: token,
+      });
   } else {
     throw new Error("Invalid Credentials");
   }

@@ -44,9 +44,17 @@ const NavBar = () => {
     if (!val) {
       return;
     }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/user/all?search=${val}`);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_BACKEND}/api/user/all?search=${val}`,
+        config
+      );
       setData(data);
       console.log(data);
       setLoading(false);

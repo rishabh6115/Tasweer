@@ -5,15 +5,19 @@ const User = require("../modals/userModal");
 const expressAsyncHandler = require("express-async-handler");
 
 const auth = expressAsyncHandler(async (req, res, next) => {
-  const cookie = req.cookies["jwt"];
-  if (!cookie) {
-    throw new Error("Unauthorised");
+  const authorizationHeader = req.headers["authorization"];
+  if (!authorizationHeader) {
+    console.log("Header token not present");
+    return;
   }
-  const data = jwt.verify(cookie, process.env.SECRET);
+
+  const token = authorizationHeader.split(" ")[1];
+
+  const data = jwt.verify(token, process.env.SECRET);
 
   if (!data) {
     res.status(401);
-    throw new Error("Not authorised");
+    throw new Error("Not authorized");
   }
 
   const user = await User.findById(data.id).select("-password");

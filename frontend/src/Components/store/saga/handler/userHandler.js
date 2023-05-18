@@ -20,6 +20,7 @@ export function* handleGetUser(action) {
     yield put(userActions.setLoggedUser(data));
     yield put(userActions.setIsAuthenticated(true));
     yield put(userActions.setNotification("Registration Successful"));
+    localStorage.setItem("token", data.token);
     yield put(userActions.setLoading(false));
   } catch (error) {
     console.log(error);
@@ -48,9 +49,9 @@ export function* handleLoggedUser() {
 
 export function* handleLogout() {
   try {
-    yield call(requestLogout);
     yield put(userActions.setLoggedUser(null));
     yield put(userActions.setIsAuthenticated(false));
+    localStorage.removeItem("token");
   } catch (error) {}
 }
 
@@ -63,6 +64,7 @@ export function* handleLogin() {
     yield put(userActions.setIsAuthenticated(true));
     yield put(userActions.setLoggedUser(data));
     yield put(userActions.setNotification("Logged In Successfully"));
+    localStorage.setItem("token", data.token);
     yield put(userActions.setLoading(false));
   } catch (error) {
     console.log(error);

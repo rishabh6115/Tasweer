@@ -4,7 +4,7 @@ export function requestGetUser(d) {
     email: d.email,
     password: d.password,
   });
-  return fetch("/api/user", {
+  return fetch(`${process.env.REACT_APP_BACKEND}/api/user`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -15,27 +15,28 @@ export function requestGetUser(d) {
 }
 
 export function requestLoggedUser() {
-  return fetch("/api/user", {
+  return fetch(`${process.env.REACT_APP_BACKEND}/api/user`, {
     method: "GET",
     headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
   });
 }
 
-export const requestLogout = () => {
-  return fetch("/api/user/logout", {
-    method: "GET",
-  });
-};
+// export const requestLogout = () => {
+//   return fetch(`${process.env.REACT_APP_BACKEND}/api/user/logout`, {
+//     method: "GET",
+//   });
+// };
 
 export const requestLogin = (d) => {
   const data = JSON.stringify({
     email: d.email,
     password: d.password,
   });
-  return fetch("/api/user/login", {
+  return fetch(`${process.env.REACT_APP_BACKEND}/api/user/login`, {
     method: "POST",
     headers: {
       Accept: "application/json",

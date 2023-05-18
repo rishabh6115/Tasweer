@@ -36,11 +36,16 @@ const CreateNewPost = () => {
         };
         const config = {
           headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             accept: "application/json",
             "content-type": "application/json",
           },
         };
-        const { data } = await axios.post("/api/post", body, config);
+        await axios.post(
+          `${process.env.REACT_APP_BACKEND}/api/post`,
+          body,
+          config
+        );
         toast({
           title: "Post created successfully",
           status: "success",
@@ -53,6 +58,12 @@ const CreateNewPost = () => {
       } catch (error) {
         setLoading(false);
         console.log(error);
+        toast({
+          title: error.message,
+          status: "false",
+          duration: 4000,
+          isClosable: true,
+        });
       }
     },
   });

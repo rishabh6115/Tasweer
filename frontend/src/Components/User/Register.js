@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../store/userSlice";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { ImCross } from "react-icons/im";
 const Register = () => {
   const toast = useToast();
   const dispatch = useDispatch();
@@ -26,8 +25,6 @@ const Register = () => {
   }
 
   let navigate = useNavigate();
-  // const isAuth = useSelector((state) => state.user.isAuthenticated);
-  console.log(isLoading);
   const loggeduser = useSelector((state) => state.user.loggedUser);
 
   const clickHandler = () => {
