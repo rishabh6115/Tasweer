@@ -32,4 +32,4 @@ Express and Node make up the middle (application) tier. Express.js is a server-s
 
 ## Demo
 
-https://tasweer02.herokuapp.com/
+https://tasweer-frontend.vercel.app
