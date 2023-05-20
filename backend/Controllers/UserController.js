@@ -1,4 +1,4 @@
-const User = require("../modals/userModal");
+const User = require("../modals/UserModal");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../generateToken");
 
@@ -55,14 +55,12 @@ const login = asyncHandler(async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res
-      .status(201)
-      .json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        token: token,
-      });
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token: token,
+    });
   } else {
     throw new Error("Invalid Credentials");
   }

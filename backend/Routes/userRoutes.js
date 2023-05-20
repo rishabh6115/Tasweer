@@ -5,8 +5,8 @@ const {
   getuser,
   alluser,
   logout,
-} = require("../Controllers/userController");
-const { auth } = require("../Middlewares/auth");
+} = require("../controllers/usercontroller");
+const { auth } = require("../middlewares/auth");
 const router = express.Router();
 
 router.route("/").post(register).get(auth, getuser);

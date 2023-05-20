@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
-const User = require("../modals/userModal");
+const User = require("../modals/UserModal");
 const expressAsyncHandler = require("express-async-handler");
 
 const auth = expressAsyncHandler(async (req, res, next) => {

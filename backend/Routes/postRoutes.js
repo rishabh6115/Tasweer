@@ -1,5 +1,5 @@
 const express = require("express");
-const { auth } = require("../Middlewares/auth");
+const { auth } = require("../middlewares/auth");
 const router = express.Router();
 
 const {
@@ -12,7 +12,7 @@ const {
   addComments,
   deleteComment,
   singlePost,
-} = require("../Controllers/postController");
+} = require("../controllers/postcontroller");
 
 router.route("/").post(auth, createPost).get(allPost);
 router.route("/singleuserpost/:userId").get(auth, singleUserPosts);
